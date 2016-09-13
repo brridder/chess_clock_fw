@@ -9,8 +9,11 @@ if (BUILD_HOST)
     set(CMAKE_INSTALL_PREFIX ${PROJECT_BINARY_DIR}/../bin/${CMAKE_BUILD_TYPE}/Host)
 elseif (BUILD_TARGET)
     set(CMAKE_TOOLCHAIN_FILE cmake/gcc-arm.toolchain.cmake)
+
+    project(target C ASM)
+
     include(cmake/mkl25z4.cmake)
-    project(target C CXX ASM)
+
     set(CMAKE_INSTALL_PREFIX ${PROJECT_BINARY_DIR}/../bin/${CMAKE_BUILD_TYPE}/Target)
     add_subdirectory(devices)
     add_subdirectory(drivers)
