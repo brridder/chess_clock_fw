@@ -1,2 +1,3 @@
-cmake_minmum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.6)
 
+add_subdirectory(frdm-kl25z)

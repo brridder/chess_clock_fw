@@ -7,5 +7,6 @@ create_library(
         src/startup_MKL25Z4.S
     INCLUDE_DIR
         inc
+        CMSIS/Include
     LIBRARIES
 )
