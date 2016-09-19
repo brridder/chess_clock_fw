@@ -8,4 +8,5 @@ create_library(
     INCLUDE_DIR
         inc
     LIBRARIES
+        CMSIS
 )
