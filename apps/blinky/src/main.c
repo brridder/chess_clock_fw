@@ -1,27 +1,79 @@
 #include <MKL25Z4.h>
+#include <assert.h>
 
-void delay(void) {
+enum {
+    LED_GREEN_PIN = 19,
+    LED_RED_PIN = 18,
+    LED_BLUE_PIN = 1,
+};
 
-    volatile int i = 2000000;
+typedef enum led_t{
+    LED_GREEN = 0,
+    LED_RED,
+    LED_BLUE,
+
+    LED_COUNT
+} led_t;
+
+typedef struct led_table {
+    uint8_t pin;
+    GPIO_Type *gpio;
+    PORT_Type *port;
+    uint8_t mux;
+} led_table_t;
+
+static led_table_t led_table[LED_COUNT] = {
+    { .pin = LED_GREEN_PIN, .gpio = GPIOB, .port = PORTB, .mux = 1 },
+    { .pin = LED_RED_PIN, .gpio = GPIOB, .port = PORTB, .mux = 1 },
+    { .pin = LED_BLUE_PIN, .gpio = GPIOD, .port = PORTD, .mux = 1 },
+};
+
+void delay(void)
+{
+    volatile int i = 1000000;
     while (i--) {}
+}
+
+void disable_wdog(void)
+{
+    SIM->COPC = 0;
+}
+
+void init_leds(void) {
+    SIM->SCGC5 |= (SIM_SCGC5_PORTB(1) | SIM_SCGC5_PORTD(1));
+    for (int i = 0; i < sizeof(led_table)/sizeof(led_table[0]); i++) {
+        led_table[i].port->PCR[led_table[i].pin] = PORT_PCR_MUX(led_table[i].mux);
+        led_table[i].gpio->PDDR |= (1 << led_table[i].pin);
+    }
+}
+
+void led_set(led_t led) {
+    led_table[led].gpio->PSOR |= (1 << led_table[led].pin);
+}
+
+void led_clear(led_t led) {
+    led_table[led].gpio->PCOR |= (1 << led_table[led].pin);
+}
+
+void led_toggle(led_t led) {
+    led_table[led].gpio->PTOR |= (1 << led_table[led].pin);
 }
 
 int main(void)
 {
-    // RED is PTB18
-    // BLUE is PTD1
-    // GREEN is PTB19
+    disable_wdog();
 
-    SIM->SCGC5 |= SIM_SCGC5_PORTB(1) & SIM_SCGC5_PORTD(1);
-    GPIOB->PDDR |= (1 << 18) & (1 << 19);
-    GPIOD->PDDR |= (1 << 1);
+    init_leds();
 
+    led_set(LED_GREEN);
+    led_set(LED_RED);
+    led_set(LED_BLUE);
     while(1) {
-        GPIOB->PTOR |= (1 << 18);
+        led_toggle(LED_GREEN);
         delay();
-        GPIOB->PTOR |= (1 << 19);
+        led_toggle(LED_RED);
         delay();
-        GPIOD->PTOR |= (1 << 1);
+        led_toggle(LED_BLUE);
         delay();
     }
     return 1;
