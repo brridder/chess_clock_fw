@@ -1,11 +1,11 @@
 #pragma once
 
-typedef enum bsp_led_t{
-    BSP_LED_GREEN = 0,
-    BSP_LED_RED,
-    BSP_LED_BLUE,
+#include <driver/gpio.h>
 
-    BSP_LED_COUNT
+typedef enum bsp_led_t{
+    BSP_LED_GREEN = GPIO_PORTB_PIN_18,
+    BSP_LED_RED = GPIO_PORTB_PIN_19,
+    BSP_LED_BLUE = GPIO_PORTD_PIN_1,
 } bsp_led_t;
 
 void bsp_led_init(void);

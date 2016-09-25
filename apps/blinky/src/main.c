@@ -1,3 +1,5 @@
+#include <bsp/bsp.h>
+
 #include <bsp/bsp_led.h>
 
 #include <MKL25Z4.h>
@@ -17,7 +19,7 @@ void disable_wdog(void)
 int main(void)
 {
     disable_wdog();
-
+    bsp_init();
     bsp_led_init();
 
     bsp_led_set(BSP_LED_GREEN);

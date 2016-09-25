@@ -16,8 +16,8 @@ typedef struct gpio_table_t {
 } gpio_table_t;
 
 static gpio_table_t gpio_table[3] = {
-    { .pin = 19, .gpio = GPIOB, .port = PORTB, .mux = 1 },
     { .pin = 18, .gpio = GPIOB, .port = PORTB, .mux = 1 },
+    { .pin = 19, .gpio = GPIOB, .port = PORTB, .mux = 1 },
     { .pin = 1,  .gpio = GPIOD, .port = PORTD, .mux = 1 },
 };
 

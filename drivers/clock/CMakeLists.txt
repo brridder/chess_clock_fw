@@ -2,14 +2,12 @@ cmake_minimum_required(VERSION 3.6)
 
 create_library(
     NAME
-        bsp_frdm_kl25z
+        clock
     SOURCES
-        src/bsp.c
-        src/bsp_led.c
+        src/clock.c
     INCLUDE_DIR
         inc
     LIBRARIES
-        clock
         mkl25z4
-        gpio
 )
+
