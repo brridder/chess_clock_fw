@@ -9,6 +9,7 @@ create_application(
         ${CMAKE_SOURCE_DIR}/devices/mkl25z4/linker/MKL25Z128xxx4_flash.ld
     LIBRARIES
         bsp_frdm_kl25z
-        mkl25z4
         gpio
+        mkl25z4
+        watchdog
 )
