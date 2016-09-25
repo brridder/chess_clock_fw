@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 typedef enum gpio_port_t {
     GPIO_PORT_A = 0,
     GPIO_PORT_B,
@@ -19,6 +21,6 @@ typedef struct gpio_config_gpio_config_t {
 
 void gpio_init(void);
 
-void gpio_set(gpio_pin_t pin);
-void gpio_clear(gpio_pin_t pin);
-
+void gpio_set(uint8_t pin);
+void gpio_clear(uint8_t pin);
+void gpio_toggle(uint8_t pin);

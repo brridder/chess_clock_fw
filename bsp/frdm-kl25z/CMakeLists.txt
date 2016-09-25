@@ -5,8 +5,10 @@ create_library(
         bsp_frdm_kl25z
     SOURCES
         src/bsp.c
+        src/bsp_led.c
     INCLUDE_DIR
         inc
     LIBRARIES
         mkl25z4
+        gpio
 )
